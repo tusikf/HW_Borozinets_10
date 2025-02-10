@@ -49,6 +49,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/slider"
+        app:trackColor="#FFFF0000"
+        app:tickVisible="true"
+        app:tickColor="#0B28E4"
+        android:valueFrom="0"
+        android:valueTo="60"
+
         app:layout_constraintTop_toBottomOf="@id/progressline"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

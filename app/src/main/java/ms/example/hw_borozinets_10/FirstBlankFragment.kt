@@ -45,8 +45,15 @@ class FirstBlankFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentFirstBlankBinding.inflate(layoutInflater)
 
+        binding.slider.setOnClickListener {
+
+        }
+
+
+
         return binding.root
     }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("Key", "string")
