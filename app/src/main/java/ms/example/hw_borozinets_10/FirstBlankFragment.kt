@@ -51,15 +51,17 @@ class FirstBlankFragment : Fragment() {
         binding.slider.addOnChangeListener { slider, value, fromUser ->
             timervalue = binding.slider.value.toInt()
             binding.timer.text= timervalue.toString()
+            binding.progressline.progress = 0
         }
         binding.buttonstart.setOnClickListener {
-            flag = flag.not()
+            flag = !flag
             binding.buttonstart.text= resources.getString(R.string.stop)
 
             while (flag) {
                 if (timervalue == 0) {
                     timervalue--
                     binding.timer.text= timervalue.toString()
+                    binding.progressline.progress++
                 }
             }
 
