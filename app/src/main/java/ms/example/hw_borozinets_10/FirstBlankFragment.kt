@@ -51,7 +51,8 @@ class FirstBlankFragment : Fragment() {
         binding.slider.addOnChangeListener { slider, value, fromUser ->
             timervalue = binding.slider.value.toInt()
             binding.timer.text= timervalue.toString()
-            binding.progressline.progress = 0
+            binding.progressline.setProgress(0)
+            binding.progressline.max = timervalue
         }
         binding.buttonstart.setOnClickListener {
             flag = !flag
@@ -61,7 +62,7 @@ class FirstBlankFragment : Fragment() {
                 if (timervalue == 0) {
                     timervalue--
                     binding.timer.text= timervalue.toString()
-                    binding.progressline.progress++
+                    binding.progressline.setProgress(+1)
                 }
             }
 
