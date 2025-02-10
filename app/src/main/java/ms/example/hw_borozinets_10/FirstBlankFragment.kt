@@ -26,6 +26,9 @@ class FirstBlankFragment : Fragment() {
     private var _binding: FragmentFirstBlankBinding? = null
     private val binding get() = _binding!!
 
+    private var timervalue = 0
+    private var flag = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savedInstanceState?.let { bundle ->
@@ -45,7 +48,20 @@ class FirstBlankFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentFirstBlankBinding.inflate(layoutInflater)
 
-        binding.slider.setOnClickListener {
+        binding.slider.addOnChangeListener { slider, value, fromUser ->
+            timervalue = binding.slider.value.toInt()
+            binding.timer.text= timervalue.toString()
+        }
+        binding.buttonstart.setOnClickListener {
+            flag = flag.not()
+            binding.buttonstart.text= resources.getString(R.string.stop)
+
+            while (flag) {
+                if (timervalue == 0) {
+                    timervalue--
+                    binding.timer.text= timervalue.toString()
+                }
+            }
 
         }
 

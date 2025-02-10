@@ -42,17 +42,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.25"
-        android:text="20"
+        android:text="0"
         android:textSize="65px"
         />
     <com.google.android.material.slider.Slider
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/slider"
-        app:trackColor="#FFFF0000"
+
         app:tickVisible="true"
         app:tickColor="#0B28E4"
         android:valueFrom="0"
+        android:stepSize="1"
         android:valueTo="60"
 
         app:layout_constraintTop_toBottomOf="@id/progressline"
