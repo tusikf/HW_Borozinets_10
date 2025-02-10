@@ -1,6 +1,7 @@
 package ms.example.hw_borozinets_10
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,10 @@ class FirstBlankFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedInstanceState?.let { bundle ->
+            bundle.getString("Key", "default value")
+        }
+        Log.d("TAG".toString(), "onCreate Fragment")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -41,6 +46,41 @@ class FirstBlankFragment : Fragment() {
         _binding = FragmentFirstBlankBinding.inflate(layoutInflater)
 
         return binding.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("Key", "string")
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("TAG".toString(), "onStart Fragment")
+        println("yes Start Fragment")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("TAG".toString(), "onResume Fragment")
+        println("yes Resume Fragment")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("TAG".toString(), "onPause Fragment")
+        println("yes Pause Fragment")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("TAG".toString(), "onStop Fragment")
+        println("yes Stop Fragment")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("TAG".toString(), "onDestroy Fragment")
+        println("yes Destroy it Fragment")
     }
 
     companion object {
