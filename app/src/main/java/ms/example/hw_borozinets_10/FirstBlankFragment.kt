@@ -32,7 +32,7 @@ class FirstBlankFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savedInstanceState?.let { bundle ->
-            bundle.getString("Key", "default value")
+            bundle.getInt("Key", 0)
         }
         Log.d("TAG".toString(), "onCreate Fragment")
         arguments?.let {
@@ -75,7 +75,7 @@ class FirstBlankFragment : Fragment() {
 
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("Key", "string")
+        outState.putInt("Key", timervalue)
         super.onSaveInstanceState(outState)
     }
 
