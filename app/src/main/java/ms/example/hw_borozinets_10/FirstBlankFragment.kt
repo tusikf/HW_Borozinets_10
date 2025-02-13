@@ -1,11 +1,14 @@
 package ms.example.hw_borozinets_10
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import ms.example.hw_borozinets_10.databinding.FragmentFirstBlankBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,10 +32,12 @@ class FirstBlankFragment : Fragment() {
     private var timervalue = 0
     private var flag = false
 
+    private var timer: CountDownTimer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savedInstanceState?.let { bundle ->
-            bundle.getInt("Key", 0)
+            flag=bundle.getBoolean("Key", true)
         }
         Log.d("TAG".toString(), "onCreate Fragment")
         arguments?.let {
@@ -47,37 +52,67 @@ class FirstBlankFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentFirstBlankBinding.inflate(layoutInflater)
-
-        binding.slider.addOnChangeListener { slider, value, fromUser ->
-            timervalue = binding.slider.value.toInt()
-            binding.timer.text= timervalue.toString()
-            binding.progressline.setProgress(0)
-            binding.progressline.max = timervalue
-        }
-        binding.buttonstart.setOnClickListener {
-            flag = !flag
-            binding.buttonstart.text= resources.getString(R.string.stop)
-
-            while (flag) {
-                if (timervalue == 0) {
-                    timervalue--
-                    binding.timer.text= timervalue.toString()
-                    binding.progressline.setProgress(+1)
-                }
-            }
-
-        }
-
-
-
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (flag){
+            startCountDownTimer(binding.progressline.progress.toLong()*1000)
+            binding.buttonstart.text= resources.getString(R.string.stop)
+
+
+        } else {
+
+            binding.slider.addOnChangeListener { slider, value, fromUser ->
+                timervalue = binding.slider.value.toInt()
+                binding.timer.text= timervalue.toString()
+                binding.progressline.progress = timervalue
+                binding.progressline.max = timervalue
+            }
+            binding.buttonstart.setOnClickListener {
+
+                flag = true
+                binding.buttonstart.text= resources.getString(R.string.stop)
+                startCountDownTimer(timervalue.toLong()*1000)
+
+            }
+        }
+
+
+
+    }
+    private fun startCountDownTimer(timeSecond:Long){
+        timer?.cancel()
+        timer = object : CountDownTimer(timeSecond, 1000){
+            override fun onTick(p0: Long) {
+                binding.progressline.progress--
+                binding.timer.text = (p0/1000).toString()
+
+            }
+
+            override fun onFinish() {
+                //Toast.makeText(this@FirstBlankFragment, "Timer is Finish", Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Timer is Finish", Snackbar.LENGTH_LONG).show()
+                binding.slider.value=0.0F
+                binding.slider.isEnabled = true
+                binding.buttonstart.text = "Start"
+            }
+
+        }.start()
+
+    }
+
+
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt("Key", timervalue)
         super.onSaveInstanceState(outState)
+        outState.putBoolean("Key", flag)
     }
+
+
+
 
     override fun onStart() {
         super.onStart()
